@@ -7,7 +7,7 @@ This is our implementation of the paper in SIGIR2022:
 > 
 > *Proceedings of the 45nd International ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR 2022)*
 > 
-> Preprint:
+> Preprint: https://arxiv.org/abs/2204.09263
 
 
 # Citation
