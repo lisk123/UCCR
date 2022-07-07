@@ -1,0 +1,213 @@
+2022-07-07 02:21:53.895 | INFO     | crslab.config.config:__init__:78 - [Dataset: TGReDial tokenized in pkuseg]
+2022-07-07 02:21:53.896 | INFO     | crslab.config.config:__init__:80 - [Model: KGSF]
+2022-07-07 02:21:53.897 | INFO     | crslab.config.config:__init__:87 - [Config]
+{
+    "dataset": "TGReDial",
+    "tokenize": "pkuseg",
+    "embedding": "word2vec.npy",
+    "context_truncate": 256,
+    "response_truncate": 30,
+    "scale": 1.0,
+    "model": "KGSF",
+    "token_emb_dim": 300,
+    "kg_emb_dim": 128,
+    "num_bases": 8,
+    "n_heads": 2,
+    "n_layers": 2,
+    "ffn_size": 300,
+    "dropout": 0.1,
+    "attention_dropout": 0.0,
+    "relu_dropout": 0.1,
+    "learn_positional_embeddings": false,
+    "embeddings_scale": true,
+    "reduction": false,
+    "n_positions": 1024,
+    "pretrain": {
+        "epoch": 3,
+        "batch_size": 128,
+        "optimizer": {
+            "name": "Adam",
+            "lr": 0.001
+        }
+    },
+    "rec": {
+        "epoch": 16,
+        "batch_size": 128,
+        "optimizer": {
+            "name": "Adam",
+            "lr": 0.001
+        },
+        "early_stop": true,
+        "stop_mode": "max",
+        "impatience": 6
+    },
+    "conv": {
+        "epoch": 20,
+        "batch_size": 128,
+        "optimizer": {
+            "name": "Adam",
+            "lr": 0.001
+        },
+        "lr_scheduler": {
+            "name": "ReduceLROnPlateau",
+            "patience": 10,
+            "factor": 0.5
+        },
+        "gradient_clip": 0.1
+    },
+    "model_name": "KGSF"
+}
+2022-07-07 02:21:59.852 | INFO     | crslab.data.dataset.base:__init__:49 - [Finish data load]
+2022-07-07 02:24:40.121 | INFO     | crslab.data.dataset.base:__init__:57 - [Finish data preprocess]
+2022-07-07 02:24:45.302 | INFO     | crslab.model:get_model:43 - [Build model KGSF]
+2022-07-07 02:24:53.501 | INFO     | crslab.evaluator.standard:_load_embedding:54 - [Load /data/lisk/webconf/UCCR-open-source/data/embedding/zh/cc.zh.300.bin for embedding metric
+2022-07-07 02:24:53.501 | INFO     | crslab.evaluator:get_evaluator:32 - [Build evaluator standard]
+2022-07-07 02:24:53.501 | INFO     | crslab.system:get_system:47 - [Build system KGSF]
+2022-07-07 02:24:53.503 | INFO     | crslab.system.base:build_optimizer:121 - [Build optimizer: Adam]
+2022-07-07 02:24:53.503 | INFO     | crslab.system.kgsf:pretrain:173 - [Pretrain epoch 0]
+2022-07-07 02:24:53.582 | INFO     | crslab.data.dataloader.base:get_data:55 - [Finish dataset process before batchify]
+2022-07-07 02:31:13.925 | INFO     | crslab.evaluator.standard:report:86 - 
+    grad norm  info_loss
+          873      289.3
+2022-07-07 02:31:13.925 | INFO     | crslab.system.kgsf:pretrain:173 - [Pretrain epoch 1]
+2022-07-07 02:31:14.038 | INFO     | crslab.data.dataloader.base:get_data:55 - [Finish dataset process before batchify]
+2022-07-07 02:37:28.952 | INFO     | crslab.evaluator.standard:report:86 - 
+    grad norm  info_loss
+        229.9      196.9
+2022-07-07 02:37:28.953 | INFO     | crslab.system.kgsf:pretrain:173 - [Pretrain epoch 2]
+2022-07-07 02:37:29.061 | INFO     | crslab.data.dataloader.base:get_data:55 - [Finish dataset process before batchify]
+2022-07-07 02:43:58.201 | INFO     | crslab.evaluator.standard:report:86 - 
+    grad norm  info_loss
+          259      115.6
+2022-07-07 02:43:58.219 | INFO     | crslab.system.base:build_optimizer:121 - [Build optimizer: Adam]
+2022-07-07 02:43:58.219 | INFO     | crslab.system.kgsf:train_recommender:190 - [Recommendation epoch 0]
+2022-07-07 02:43:58.220 | INFO     | crslab.system.kgsf:train_recommender:191 - [Train]
+2022-07-07 02:44:45.833 | INFO     | crslab.data.dataloader.base:get_data:55 - [Finish dataset process before batchify]
+2022-07-07 02:45:33.450 | INFO     | crslab.data.dataloader.base:get_data:55 - [Finish dataset process before batchify]
+2022-07-07 02:53:25.041 | INFO     | crslab.evaluator.standard:report:86 - 
+    grad norm  info_loss  rec_loss
+        8.133      94.14     10.68
+2022-07-07 02:53:25.042 | INFO     | crslab.system.kgsf:train_recommender:196 - [Valid]
+2022-07-07 02:53:28.034 | INFO     | crslab.data.dataloader.base:get_data:55 - [Finish dataset process before batchify]
+2022-07-07 02:53:43.243 | INFO     | crslab.evaluator.standard:report:86 - 
+     hit@1  hit@10  hit@50   mrr@1  mrr@10  mrr@50  ndcg@1  ndcg@10  ndcg@50  rec_loss
+   .002513  .01466  .04229 .002513 .005843 .007018 .002513  .007917   .01382     10.55
+2022-07-07 02:53:46.199 | INFO     | crslab.data.dataloader.base:get_data:55 - [Finish dataset process before batchify]
+2022-07-07 02:54:03.690 | INFO     | crslab.evaluator.standard:report:86 - 
+      hit@1  hit@10  hit@50    mrr@1  mrr@10  mrr@50   ndcg@1  ndcg@10  ndcg@50  rec_loss
+   .0004146  .01161  .03524 .0004146 .003499 .004507 .0004146  .005416   .01047     10.62
+2022-07-07 02:54:03.691 | INFO     | crslab.system.base:early_stop:232 - [Get new best model]
+2022-07-07 02:54:03.692 | INFO     | crslab.system.kgsf:train_recommender:190 - [Recommendation epoch 1]
+2022-07-07 02:54:03.692 | INFO     | crslab.system.kgsf:train_recommender:191 - [Train]
+2022-07-07 02:54:43.490 | INFO     | crslab.data.dataloader.base:get_data:55 - [Finish dataset process before batchify]
+2022-07-07 02:55:28.443 | INFO     | crslab.data.dataloader.base:get_data:55 - [Finish dataset process before batchify]
+2022-07-07 03:03:18.479 | INFO     | crslab.evaluator.standard:report:86 - 
+    grad norm  info_loss  rec_loss
+         6.19      93.36     8.553
+2022-07-07 03:03:18.480 | INFO     | crslab.system.kgsf:train_recommender:196 - [Valid]
+2022-07-07 03:03:21.419 | INFO     | crslab.data.dataloader.base:get_data:55 - [Finish dataset process before batchify]
+2022-07-07 03:03:35.432 | INFO     | crslab.evaluator.standard:report:86 - 
+     hit@1  hit@10  hit@50   mrr@1  mrr@10  mrr@50  ndcg@1  ndcg@10  ndcg@50  rec_loss
+   .002513  .02596  .07747 .002513 .008253  .01053 .002513   .01235    .0235     10.42
+2022-07-07 03:03:38.391 | INFO     | crslab.data.dataloader.base:get_data:55 - [Finish dataset process before batchify]
+2022-07-07 03:03:52.968 | INFO     | crslab.evaluator.standard:report:86 - 
+     hit@1  hit@10  hit@50   mrr@1  mrr@10  mrr@50  ndcg@1  ndcg@10  ndcg@50  rec_loss
+   .003731   .0257  .06924 .003731 .008755  .01052 .003731   .01264   .02182     10.58
+2022-07-07 03:03:52.968 | INFO     | crslab.system.base:early_stop:232 - [Get new best model]
+2022-07-07 03:03:52.969 | INFO     | crslab.system.kgsf:train_recommender:190 - [Recommendation epoch 2]
+2022-07-07 03:03:52.969 | INFO     | crslab.system.kgsf:train_recommender:191 - [Train]
+2022-07-07 03:04:37.049 | INFO     | crslab.data.dataloader.base:get_data:55 - [Finish dataset process before batchify]
+2022-07-07 03:05:23.119 | INFO     | crslab.data.dataloader.base:get_data:55 - [Finish dataset process before batchify]
+2022-07-07 03:13:16.286 | INFO     | crslab.evaluator.standard:report:86 - 
+    grad norm  info_loss  rec_loss
+        5.949      89.22     6.582
+2022-07-07 03:13:16.286 | INFO     | crslab.system.kgsf:train_recommender:196 - [Valid]
+2022-07-07 03:13:19.245 | INFO     | crslab.data.dataloader.base:get_data:55 - [Finish dataset process before batchify]
+2022-07-07 03:13:32.880 | INFO     | crslab.evaluator.standard:report:86 - 
+     hit@1  hit@10  hit@50   mrr@1  mrr@10  mrr@50  ndcg@1  ndcg@10  ndcg@50  rec_loss
+   .004606  .02722  .07454 .004606  .01004  .01197 .004606   .01404   .02404     10.55
+2022-07-07 03:13:35.855 | INFO     | crslab.data.dataloader.base:get_data:55 - [Finish dataset process before batchify]
+2022-07-07 03:13:49.111 | INFO     | crslab.evaluator.standard:report:86 - 
+     hit@1  hit@10  hit@50   mrr@1  mrr@10  mrr@50  ndcg@1  ndcg@10  ndcg@50  rec_loss
+   .004146  .02032  .06468 .004146 .008777  .01076 .004146   .01151   .02112     10.66
+2022-07-07 03:13:49.112 | INFO     | crslab.system.kgsf:train_recommender:190 - [Recommendation epoch 3]
+2022-07-07 03:13:49.112 | INFO     | crslab.system.kgsf:train_recommender:191 - [Train]
+2022-07-07 03:14:33.323 | INFO     | crslab.data.dataloader.base:get_data:55 - [Finish dataset process before batchify]
+2022-07-07 03:15:20.532 | INFO     | crslab.data.dataloader.base:get_data:55 - [Finish dataset process before batchify]
+2022-07-07 03:23:15.590 | INFO     | crslab.evaluator.standard:report:86 - 
+    grad norm  info_loss  rec_loss
+        12.61      88.02     5.406
+2022-07-07 03:23:15.590 | INFO     | crslab.system.kgsf:train_recommender:196 - [Valid]
+2022-07-07 03:23:18.444 | INFO     | crslab.data.dataloader.base:get_data:55 - [Finish dataset process before batchify]
+2022-07-07 03:23:34.573 | INFO     | crslab.evaluator.standard:report:86 - 
+     hit@1  hit@10  hit@50   mrr@1  mrr@10  mrr@50  ndcg@1  ndcg@10  ndcg@50  rec_loss
+   .002931  .02513  .07454 .002931 .008456  .01047 .002931   .01233   .02277     10.54
+2022-07-07 03:23:37.574 | INFO     | crslab.data.dataloader.base:get_data:55 - [Finish dataset process before batchify]
+2022-07-07 03:23:52.945 | INFO     | crslab.evaluator.standard:report:86 - 
+     hit@1  hit@10  hit@50   mrr@1  mrr@10  mrr@50  ndcg@1  ndcg@10  ndcg@50  rec_loss
+   .005804  .02405  .07131 .005804  .01062  .01272 .005804   .01376   .02399     10.71
+2022-07-07 03:23:52.946 | INFO     | crslab.system.kgsf:train_recommender:190 - [Recommendation epoch 4]
+2022-07-07 03:23:52.947 | INFO     | crslab.system.kgsf:train_recommender:191 - [Train]
+2022-07-07 03:24:38.029 | INFO     | crslab.data.dataloader.base:get_data:55 - [Finish dataset process before batchify]
+2022-07-07 03:25:25.806 | INFO     | crslab.data.dataloader.base:get_data:55 - [Finish dataset process before batchify]
+2022-07-07 03:33:13.166 | INFO     | crslab.evaluator.standard:report:86 - 
+    grad norm  info_loss  rec_loss
+        9.668      85.08     4.582
+2022-07-07 03:33:13.167 | INFO     | crslab.system.kgsf:train_recommender:196 - [Valid]
+2022-07-07 03:33:16.247 | INFO     | crslab.data.dataloader.base:get_data:55 - [Finish dataset process before batchify]
+2022-07-07 03:33:29.980 | INFO     | crslab.evaluator.standard:report:86 - 
+     hit@1  hit@10  hit@50   mrr@1  mrr@10  mrr@50  ndcg@1  ndcg@10  ndcg@50  rec_loss
+   .005025  .02387  .06784 .005025  .00996  .01184 .005025   .01323   .02263     10.92
+2022-07-07 03:33:32.998 | INFO     | crslab.data.dataloader.base:get_data:55 - [Finish dataset process before batchify]
+2022-07-07 03:33:46.781 | INFO     | crslab.evaluator.standard:report:86 - 
+    hit@1  hit@10  hit@50  mrr@1  mrr@10  mrr@50  ndcg@1  ndcg@10  ndcg@50  rec_loss
+   .00539  .02322  .07172 .00539 .008888  .01087  .00539   .01214    .0224     11.21
+2022-07-07 03:33:46.783 | INFO     | crslab.system.kgsf:train_recommender:190 - [Recommendation epoch 5]
+2022-07-07 03:33:46.783 | INFO     | crslab.system.kgsf:train_recommender:191 - [Train]
+2022-07-07 03:34:32.253 | INFO     | crslab.data.dataloader.base:get_data:55 - [Finish dataset process before batchify]
+2022-07-07 03:35:18.923 | INFO     | crslab.data.dataloader.base:get_data:55 - [Finish dataset process before batchify]
+2022-07-07 03:43:06.161 | INFO     | crslab.evaluator.standard:report:86 - 
+    grad norm  info_loss  rec_loss
+        8.348      82.87     4.023
+2022-07-07 03:43:06.162 | INFO     | crslab.system.kgsf:train_recommender:196 - [Valid]
+2022-07-07 03:43:09.164 | INFO     | crslab.data.dataloader.base:get_data:55 - [Finish dataset process before batchify]
+2022-07-07 03:43:22.905 | INFO     | crslab.evaluator.standard:report:86 - 
+     hit@1  hit@10  hit@50   mrr@1  mrr@10  mrr@50  ndcg@1  ndcg@10  ndcg@50  rec_loss
+   .005863  .02387  .06868 .005863  .01068  .01264 .005863   .01375   .02342      11.1
+2022-07-07 03:43:25.861 | INFO     | crslab.data.dataloader.base:get_data:55 - [Finish dataset process before batchify]
+2022-07-07 03:43:40.995 | INFO     | crslab.evaluator.standard:report:86 - 
+     hit@1  hit@10  hit@50   mrr@1  mrr@10  mrr@50  ndcg@1  ndcg@10  ndcg@50  rec_loss
+   .004146  .02322  .05887 .004146 .009328  .01087 .004146   .01258   .02024     11.56
+2022-07-07 03:43:40.996 | INFO     | crslab.system.kgsf:train_recommender:190 - [Recommendation epoch 6]
+2022-07-07 03:43:40.996 | INFO     | crslab.system.kgsf:train_recommender:191 - [Train]
+2022-07-07 03:44:19.618 | INFO     | crslab.data.dataloader.base:get_data:55 - [Finish dataset process before batchify]
+2022-07-07 03:45:04.966 | INFO     | crslab.data.dataloader.base:get_data:55 - [Finish dataset process before batchify]
+2022-07-07 03:52:59.078 | INFO     | crslab.evaluator.standard:report:86 - 
+    grad norm  info_loss  rec_loss
+        4.592      81.33     3.602
+2022-07-07 03:52:59.079 | INFO     | crslab.system.kgsf:train_recommender:196 - [Valid]
+2022-07-07 03:53:02.008 | INFO     | crslab.data.dataloader.base:get_data:55 - [Finish dataset process before batchify]
+2022-07-07 03:53:15.624 | INFO     | crslab.evaluator.standard:report:86 - 
+     hit@1  hit@10  hit@50   mrr@1  mrr@10  mrr@50  ndcg@1  ndcg@10  ndcg@50  rec_loss
+   .005444  .02387  .07077 .005444 .009904   .0119 .005444   .01312   .02313     11.25
+2022-07-07 03:53:18.643 | INFO     | crslab.data.dataloader.base:get_data:55 - [Finish dataset process before batchify]
+2022-07-07 03:53:33.906 | INFO     | crslab.evaluator.standard:report:86 - 
+     hit@1  hit@10  hit@50   mrr@1  mrr@10  mrr@50  ndcg@1  ndcg@10  ndcg@50  rec_loss
+   .002902  .02446  .05929 .002902 .008604  .01005 .002902   .01235   .01975      11.4
+2022-07-07 03:53:33.907 | INFO     | crslab.system.kgsf:train_recommender:190 - [Recommendation epoch 7]
+2022-07-07 03:53:33.907 | INFO     | crslab.system.kgsf:train_recommender:191 - [Train]
+2022-07-07 03:54:17.859 | INFO     | crslab.data.dataloader.base:get_data:55 - [Finish dataset process before batchify]
+2022-07-07 03:55:04.615 | INFO     | crslab.data.dataloader.base:get_data:55 - [Finish dataset process before batchify]
+2022-07-07 04:02:48.970 | INFO     | crslab.evaluator.standard:report:86 - 
+    grad norm  info_loss  rec_loss
+        4.397      79.56     3.268
+2022-07-07 04:02:48.971 | INFO     | crslab.system.kgsf:train_recommender:196 - [Valid]
+2022-07-07 04:02:51.857 | INFO     | crslab.data.dataloader.base:get_data:55 - [Finish dataset process before batchify]
+2022-07-07 04:03:05.970 | INFO     | crslab.evaluator.standard:report:86 - 
+    hit@1  hit@10  hit@50  mrr@1  mrr@10  mrr@50  ndcg@1  ndcg@10  ndcg@50  rec_loss
+   .00335  .02303  .06407 .00335 .008221 .009914  .00335   .01164   .02035     11.49
+2022-07-07 04:03:09.069 | INFO     | crslab.data.dataloader.base:get_data:55 - [Finish dataset process before batchify]
+2022-07-07 04:03:22.592 | INFO     | crslab.evaluator.standard:report:86 - 
+     hit@1  hit@10  hit@50   mrr@1  mrr@10  mrr@50  ndcg@1  ndcg@10  ndcg@50  rec_loss
+   .003317  .02114  .05887 .003317 .008981   .0107 .003317   .01188    .0201     11.66
+2022-07-07 04:03:22.593 | INFO     | crslab.system.base:early_stop:237 - [Early stop]
