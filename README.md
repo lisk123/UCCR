@@ -9,9 +9,6 @@ This is our implementation of the paper in SIGIR2022:
 > 
 > Preprint: https://arxiv.org/abs/2204.09263
 
-# Requirements
-Please see requirements.txt.
-
 # Run
 Please run the code via:
 
